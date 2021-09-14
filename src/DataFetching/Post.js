@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import useSWR from "swr";
+import query from "../hooks/query";
 import Loading from "../Components/Loading";
 
 function User({ id }) {
-  const { data: user } = useSWR(`/users/${id}`);
+  const { data: user } = query(`/users/${id}`);
   return (
     <div>
       <h2 className="border-b pb-1 mb-2">{user.username}</h2>
@@ -12,7 +12,7 @@ function User({ id }) {
 }
 
 function Post({ id }) {
-  const { data: post } = useSWR(`/posts/${id}`);
+  const { data: post } = query(`/posts/${id}`);
   return (
     <div className="m-5">
       <h2 className="text-lg font-bold">{post.title}</h2>
@@ -25,7 +25,7 @@ function Post({ id }) {
 }
 
 function Comments({ id }) {
-  const { data: comments } = useSWR(`/comments/${id}`);
+  const { data: comments } = query(`/comments/${id}`);
   return (
     <ul className="">
       {comments.map(({ comment }) => (

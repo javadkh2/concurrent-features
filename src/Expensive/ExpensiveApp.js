@@ -2,11 +2,12 @@ import { useState, useTransition } from "react";
 import Input from "../Components/Input";
 import ExpensiveResult from "./ExpensiveResult";
 
-function App() {
+function ExpensiveApp() {
   const [search, setSearch] = useState("");
   const [isPending, startTransition] = useTransition();
   return (
-    <div className="m-4">
+    <div className="m-3">
+      <h1 className="font-bold text-xl m-2">Expensive component example</h1>
       <Input
         onChange={(value) => {
           startTransition(() => {
@@ -22,4 +23,4 @@ function App() {
   );
 }
 
-export default App;
+export default ExpensiveApp;

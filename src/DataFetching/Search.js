@@ -1,9 +1,9 @@
 import { Suspense, useState, useTransition } from "react";
-import useSWR from "swr";
+import query from "../hooks/query";
 import Input from "../Components/Input";
 
 function PostList({ setPage, search }) {
-  const { data: posts } = useSWR(`/posts?keyword=${search}`);
+  const { data: posts } = query(`/posts?keyword=${search}`);
   const [clickedPost, setClickedPost] = useState();
   return (
     <>
@@ -31,7 +31,8 @@ export default function Search({ setPage }) {
   const [search, setSearch] = useState("");
   const [isPending, startTransition] = useTransition();
   return (
-    <div className="m-4">
+    <div className="m-3">
+      <h1 className="font-bold text-xl m-2">Data fetching example</h1>
       <Input
         onChange={(value) => {
           startTransition(() => setSearch(value));
