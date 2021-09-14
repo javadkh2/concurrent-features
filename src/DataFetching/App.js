@@ -30,7 +30,7 @@ export default function App() {
         />
       )}
       {page.title === "post" && (
-        <div className={isPending && "opacity-60"}>
+        <div className={isPending ? "opacity-60" : ""}>
           <Post id={page.params.id} />
         </div>
       )}

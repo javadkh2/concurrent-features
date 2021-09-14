@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import query from "../hooks/query";
+import query from "../api/query";
 import Loading from "../Components/Loading";
 
 function User({ id }) {
@@ -27,9 +27,11 @@ function Post({ id }) {
 function Comments({ id }) {
   const { data: comments } = query(`/comments/${id}`);
   return (
-    <ul className="">
-      {comments.map(({ comment }) => (
-        <li className="bg-gray-200 m-5 p-4">{comment}</li>
+    <ul>
+      {comments.map(({ comment }, idx) => (
+        <li key={idx} className="bg-gray-200 m-5 p-4">
+          {comment}
+        </li>
       ))}
     </ul>
   );

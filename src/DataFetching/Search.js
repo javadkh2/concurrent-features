@@ -1,5 +1,5 @@
 import { Suspense, useState, useTransition } from "react";
-import query from "../hooks/query";
+import query from "../api/query";
 import Input from "../Components/Input";
 import Loading from "../Components/Loading";
 
@@ -15,8 +15,10 @@ function PostList({ setPage, search }) {
               title: "post",
               params: { id },
             });
-            // setClickedPost(id);
           }}
+          // onMouseEnter={() => {
+          //   preFetch(`/posts/${id}`);
+          // }}
           className="rounded-sm inline-block m-2 bg-gray-200 p-4 w-80 hover:bg-gray-400"
         >
           {title}
@@ -39,7 +41,7 @@ export default function Search({ setPage }) {
         }}
       />
       {isPending && "fetching...."}
-      <div className={isPending && "opacity-60"}>
+      <div className={isPending ? "opacity-60" : ""}>
         <Suspense fallback={<Loading> Suspense Fetching...</Loading>}>
           <PostList setPage={setPage} search={search} />
         </Suspense>

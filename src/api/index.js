@@ -3,7 +3,6 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const random = (max) => Math.floor(Math.random() * max * 1000) + 1;
 
 async function getPosts(keyword = "") {
-  console.log("getPosts", keyword);
   await sleep(random(3));
   return Array(20)
     .fill(null)
@@ -17,7 +16,6 @@ async function getPosts(keyword = "") {
 }
 
 async function getPost(id) {
-  console.log("getPost", id);
   await sleep(random(1));
   return {
     id,
@@ -28,7 +26,6 @@ async function getPost(id) {
 }
 
 async function getUser(id) {
-  console.log("getUser", id);
   await sleep(random(1));
   return {
     id,
@@ -38,7 +35,6 @@ async function getUser(id) {
 }
 
 async function getComments(postId) {
-  console.log("getComments", postId);
   await sleep(random(2));
   return Array(random(10))
     .fill(null)
@@ -50,11 +46,10 @@ async function getComments(postId) {
 }
 
 export default async function fetcher(url) {
-  console.info("fetch:", url);
+  console.log("fetch:", url);
   const [route, qs] = url.split("?");
   const [, path, id] = route.split("/");
   const searchParams = new URLSearchParams(qs);
-  console.log(route, path, id);
   if (route === "/posts") {
     return getPosts(searchParams.get("keyword"));
   }
