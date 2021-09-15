@@ -40,21 +40,21 @@ function Comments({ id }) {
 export default function postPage({ id }) {
   return (
     <SuspenseList tail="collapsed" revealOrder="forwards">
-      <>
-        <Suspense fallback={<Loading>{`Loading post #${id}`}</Loading>}>
-          <Post id={id} />
-        </Suspense>
-        <Suspense
-          fallback={<Loading>{`Loading comments for post #${id}`}</Loading>}
-        >
-          <Comments id={id} />
-        </Suspense>
-      </>
+      <Suspense fallback={<Loading>{`Loading post #${id}`}</Loading>}>
+        <Post id={id} />
+      </Suspense>
+      <Suspense
+        fallback={<Loading>{`Loading comments for post #${id}`}</Loading>}
+      >
+        <Comments id={id} />
+      </Suspense>
     </SuspenseList>
   );
 }
 
 postPage.preFetchData = function preFetchPostData(id) {
-  preFetch(`/posts/${id}`).then((post) => preFetch(`/user/${post.author}`));
-  preFetch(`/comments/${id}`);
+  return Promise.all([
+    preFetch(`/posts/${id}`).then((post) => preFetch(`/users/${post.author}`)),
+    preFetch(`/comments/${id}`),
+  ]);
 };
