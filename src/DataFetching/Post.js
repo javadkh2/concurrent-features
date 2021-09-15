@@ -1,5 +1,5 @@
-import { Suspense } from "react";
-import query from "../api/query";
+import { Suspense, SuspenseList } from "react";
+import query, { preFetch } from "../api/query";
 import Loading from "../Components/Loading";
 
 function User({ id }) {
@@ -39,15 +39,22 @@ function Comments({ id }) {
 
 export default function postPage({ id }) {
   return (
-    <>
-      <Suspense fallback={<Loading>{`Loading post #${id}`}</Loading>}>
-        <Post id={id} />
-      </Suspense>
-      <Suspense
-        fallback={<Loading>{`Loading comments for post #${id}`}</Loading>}
-      >
-        <Comments id={id} />
-      </Suspense>
-    </>
+    <SuspenseList tail="collapsed" revealOrder="forwards">
+      <>
+        <Suspense fallback={<Loading>{`Loading post #${id}`}</Loading>}>
+          <Post id={id} />
+        </Suspense>
+        <Suspense
+          fallback={<Loading>{`Loading comments for post #${id}`}</Loading>}
+        >
+          <Comments id={id} />
+        </Suspense>
+      </>
+    </SuspenseList>
   );
 }
+
+postPage.preFetchData = function preFetchPostData(id) {
+  preFetch(`/posts/${id}`).then((post) => preFetch(`/user/${post.author}`));
+  preFetch(`/comments/${id}`);
+};

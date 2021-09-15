@@ -2,6 +2,7 @@ import { Suspense, useState, useTransition } from "react";
 import query from "../api/query";
 import Input from "../Components/Input";
 import Loading from "../Components/Loading";
+import postPage from "./Post";
 
 function PostList({ setPage, search }) {
   const { data: posts } = query(`/posts?keyword=${search}`);
@@ -16,9 +17,9 @@ function PostList({ setPage, search }) {
               params: { id },
             });
           }}
-          // onMouseEnter={() => {
-          //   preFetch(`/posts/${id}`);
-          // }}
+          onMouseEnter={() => {
+            postPage.preFetchData(id);
+          }}
           className="rounded-sm inline-block m-2 bg-gray-200 p-4 w-80 hover:bg-gray-400"
         >
           {title}

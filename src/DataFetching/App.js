@@ -1,5 +1,6 @@
 import { useState, useTransition } from "react";
 import ExpensiveApp from "../Expensive/ExpensiveApp";
+import ExpensiveAppWithoutTransition from "../Expensive/ExpensiveAppWithoutTransition";
 import Post from "./Post";
 import Search from "./Search";
 
@@ -17,9 +18,17 @@ export default function App() {
         </button>
         <button
           className="mr-5 text-blue-500"
-          onClick={() => setPage({ title: "expensive-component" })}
+          onClick={() =>
+            setPage({ title: "expensive-component-without-transition" })
+          }
         >
           ExpensiveComponent
+        </button>
+        <button
+          className="mr-5 text-blue-500"
+          onClick={() => setPage({ title: "expensive-component" })}
+        >
+          ExpensiveComponentInConcurrentMode
         </button>
       </nav>
       {page.title === "search" && (
@@ -35,6 +44,9 @@ export default function App() {
         </div>
       )}
       {page.title === "expensive-component" && <ExpensiveApp />}
+      {page.title === "expensive-component-without-transition" && (
+        <ExpensiveAppWithoutTransition />
+      )}
     </>
   );
 }
